@@ -29,8 +29,6 @@ const credentialsProviderOption = CredentialsProvider({
 
       const parsedResponse = (await response.json()) as IUserLoginResponse;
 
-      console.log(`parsedResponse : ${parsedResponse}`);
-
       const { email, accessToken, refreshToken } = parsedResponse;
 
       if (email && accessToken) {
