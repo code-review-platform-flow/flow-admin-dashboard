@@ -6,8 +6,8 @@ WORKDIR /app
 
 # 의존성 설치를 위한 레이어
 FROM base AS deps
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install
 
 # 소스 코드 빌드를 위한 레이어
 FROM base AS builder
@@ -24,7 +24,7 @@ ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 ENV NEXT_PUBLIC_API_ENDPOINT=$NEXT_PUBLIC_API_ENDPOINT
 
 COPY --from=deps /app/node_modules ./node_modules
-RUN npm run build
+RUN pnpm run build
 
 # 프로덕션 이미지 설정
 FROM node:20-alpine AS runner
@@ -43,4 +43,4 @@ COPY --from=builder /app/package.json ./package.json
 EXPOSE 3000
 
 # Next.js 애플리케이션 시작 명령어
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
