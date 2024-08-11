@@ -21,7 +21,6 @@ const credentialsProviderOption = CredentialsProvider({
 
     try {
       const response = await loginUser(loginCredentials);
-      console.log(`response : ${response}`);
       if (!response.ok) {
         console.error(`Failed to log in: ${response.status} ${response.statusText}`);
         return null;
