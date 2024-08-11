@@ -1,8 +1,8 @@
 import Head from "next/head";
 import React from "react";
 
-export const DEFAULT_TITLE = "Purple Admin UI";
-export const DEFAULT_DESCRIPTION = "Purple Admin UI";
+export const DEFAULT_TITLE = "Flow Admin UI";
+export const DEFAULT_DESCRIPTION = "Flow Admin UI";
 
 interface ISeoHeadProps {
   title?: string;
