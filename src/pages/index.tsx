@@ -1,7 +1,6 @@
 import { useDashboard } from "@/client/sample/dashboard";
 import { getDefaultLayout, IDefaultLayoutPage, IPageHeader } from "@/components/layout/default-layout";
-import CalendarSample from "@/components/page/index/calendar-sample";
-import StatisticSample from "@/components/page/index/statistic-sample";
+import Statistic from "@/components/page/index/statistic-sample";
 import { useAuth } from "@/lib/auth/auth-provider";
 import { Alert, Divider, Skeleton } from "antd";
 
@@ -19,7 +18,7 @@ const IndexPage: IDefaultLayoutPage = () => {
 
       <div className="my-5">
         {data ? (
-          <StatisticSample data={data} />
+          <Statistic data={data} />
         ) : error ? (
           <Alert message="대시보드 API 호출 중 오류가 발생했습니다." type="warning" />
         ) : (
@@ -28,10 +27,6 @@ const IndexPage: IDefaultLayoutPage = () => {
       </div>
 
       <Divider />
-
-      <h3 className="title">달력</h3>
-
-      <CalendarSample />
     </>
   );
 };
