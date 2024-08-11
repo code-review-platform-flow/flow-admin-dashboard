@@ -70,6 +70,5 @@ export const updateUser = (id: string, value: IUserFormValue) => {
 };
 
 export const loginUser = (value: IUserCredentials) => {
-  console.log(`value : ${JSON.stringify(value)}`);
   return fetchApi.post(`auth/login`, { body: JSON.stringify(value) });
 };
