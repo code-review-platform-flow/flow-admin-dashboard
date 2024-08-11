@@ -16,5 +16,5 @@ export interface IDashboardResponse {
 }
 
 export const useDashboard = () => {
-  return useSWR<IDashboardResponse>(`/api/sample/dashboard`);
+  return useSWR<IDashboardResponse>(`/dashboard`);
 };
