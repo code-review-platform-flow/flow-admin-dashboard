@@ -42,7 +42,7 @@ jobs:
             --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
             --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
             --build-arg NEXT_PUBLIC_API_ENDPOINT=${{ secrets.NEXT_PUBLIC_API_ENDPOINT }} \
-            --tag asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-prd/flow-nextjs-prd:${{ github.sha }} .
+            --tag asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-prd/flow-admin-dashboard-prd:${{ github.sha }} .
 
   deploy:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
 
       - name: Update manifest
         run: |
-          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-prd/flow-nextjs-prd:${{ github.sha }}|" manifests/flow-web-dev/deployment.yaml
+          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-prd/flow-admin-dashboard-prd:${{ github.sha }}|" manifests/flow-web-dev/deployment.yaml
 
       - name: Commit and push changes
         working-directory: manifests
@@ -66,5 +66,5 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add .
-          git commit -m "Update image to asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-prd/flow-nextjs-prd:${{ github.sha }}"
+          git commit -m "Update image to asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-prd/flow-admin-dashboard-prd:${{ github.sha }}"
           git push
