@@ -32,7 +32,7 @@ const credentialsProviderOption = CredentialsProvider({
 
       if (email && accessToken) {
         return {
-          id: email, // Assuming email can serve as a unique ID
+          id: email,
           email,
           accessToken,
           refreshToken,
