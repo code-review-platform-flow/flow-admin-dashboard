@@ -166,7 +166,7 @@ const UserList = () => {
             엑셀 다운로드
           </Button>
           <Button type="primary" onClick={() => router.push("/user/new")}>
-            상품등록
+            유저등록
           </Button>
         </div>
       </DefaultTableBtn>
