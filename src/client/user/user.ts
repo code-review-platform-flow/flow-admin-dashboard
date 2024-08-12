@@ -22,20 +22,25 @@ interface IUsersParams {
   page?: number;
 }
 
-export interface IUsersResponse {
-  code: number;
-  message: string;
-  data: {
-    items: IUser[];
-    page: {
-      currentPage: number;
-      pageSize: number;
-      totalPage: number;
-      totalCount: number;
-    };
-  };
+export interface ISort {
+  empty: boolean;
+  unsorted: boolean;
+  sorted: boolean;
 }
 
+export interface IPage {
+  pageNumber: number;
+  pageSize: number;
+  sort: ISort;
+  offset: number;
+  unpaged: boolean;
+  paged: boolean;
+}
+
+export interface IUsersResponse {
+  data: IUser[];
+  page: IPage;
+}
 export interface IUserResponse {
   code: number;
   message: string;
@@ -54,19 +59,19 @@ export interface IUserLoginResponse {
 }
 
 export const useUsers = (params: IUsersParams = {}) => {
-  return useSWR<IUsersResponse>(`api/user?${qs.stringify(params)}`);
+  return useSWR<IUsersResponse>(`api/admin/user?${qs.stringify(params)}`);
 };
 
 export const useUser = (id: string | number) => {
-  return useSWR<IUserResponse>(`api/user/${id}`);
+  return useSWR<IUserResponse>(`api/admin/user/${id}`);
 };
 
 export const createUser = (value: IUserFormValue) => {
-  return fetchApi.post(`api/user`, { body: JSON.stringify(value) });
+  return fetchApi.post(`api/admin/user`, { body: JSON.stringify(value) });
 };
 
 export const updateUser = (id: string, value: IUserFormValue) => {
-  return fetchApi.put(`api/user/${id}`, { body: JSON.stringify(value) });
+  return fetchApi.put(`api/admin/user/${id}`, { body: JSON.stringify(value) });
 };
 
 export const loginUser = (value: IUserCredentials) => {
