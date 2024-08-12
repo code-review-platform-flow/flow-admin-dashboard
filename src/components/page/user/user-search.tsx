@@ -12,7 +12,7 @@ import React, { useCallback } from "react";
 const statusOptions = [
   { label: "전체", value: "ALL" },
   { label: "가입완료", value: "COMPLETED" },
-  { label: "탈퇴", value: "SOLDOUT" },
+  { label: "탈퇴", value: "WITHDRAWAL" },
 ];
 
 const UserSearch = () => {
