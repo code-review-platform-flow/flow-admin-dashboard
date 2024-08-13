@@ -34,7 +34,7 @@ const UserSearch = () => {
       <FormSearch>
         <FieldInline>
           <Form.Item label="기간" name="searchDateType" initialValue="created">
-            <Select dropdownMatchSelectWidth={false}>
+            <Select>
               <Select.Option value="created">등록일자</Select.Option>
               <Select.Option value="updated">수정일자</Select.Option>
             </Select>
@@ -51,7 +51,7 @@ const UserSearch = () => {
         <div>
           <FieldInline>
             <Form.Item label="검색조건" name="searchType" initialValue="userName">
-              <Select dropdownMatchSelectWidth={false}>
+              <Select>
                 <Select.Option value="userName">이름</Select.Option>
                 <Select.Option value="email">Email</Select.Option>
                 <Select.Option value="schoolName">학교명</Select.Option>
