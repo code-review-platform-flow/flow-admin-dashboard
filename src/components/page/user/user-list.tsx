@@ -14,7 +14,7 @@ const UserList = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const router = useRouter();
 
-  const { data, error, isLoading } = useUsers({ page: router.query.page ? Number(router.query.page) : 0 });
+  const { data, error, isLoading } = useUsers({ page: router.query.page ? Number(router.query.page) : 0, size: 7 });
 
   console.log(data);
 
@@ -22,7 +22,7 @@ const UserList = () => {
     (pageNumber: number) => {
       router.push({
         pathname: router.pathname,
-        query: { ...router.query, page: pageNumber },
+        query: { ...router.query, page: pageNumber - 1 },
       });
     },
     [router]
@@ -178,13 +178,13 @@ const UserList = () => {
         loading={isLoading}
         pagination={{
           current: Number(router.query.page || 1),
-          defaultPageSize: 5,
-          total: data?.page.pageNumber || 0,
+          defaultPageSize: 7,
+          total: data?.page.totalCount || 0,
           showSizeChanger: false,
           onChange: handleChangePage,
         }}
         className="mt-3"
-        countLabel={data?.page.pageNumber}
+        countLabel={data?.page.totalCount}
       />
     </>
   );

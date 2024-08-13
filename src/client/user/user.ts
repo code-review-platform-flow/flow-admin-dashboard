@@ -29,12 +29,10 @@ export interface ISort {
 }
 
 export interface IPage {
-  pageNumber: number;
+  currentPage: number;
   pageSize: number;
-  sort: ISort;
-  offset: number;
-  unpaged: boolean;
-  paged: boolean;
+  totalPage: number;
+  totalCount: number;
 }
 
 export interface IUsersResponse {
