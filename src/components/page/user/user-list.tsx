@@ -14,7 +14,7 @@ const UserList = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const router = useRouter();
 
-  const { data, error, isLoading } = useUsers({ page: router.query.page ? Number(router.query.page) : 0, size: 7 });
+  const { data, error, isLoading } = useUsers({ page: router.query.page ? Number(router.query.page) : 0 });
 
   console.log(data);
 
