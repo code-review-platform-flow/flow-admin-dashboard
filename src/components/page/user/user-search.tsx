@@ -1,4 +1,4 @@
-import { IProductFormValue } from "@/client/sample/product";
+import { IUserFormValue } from "@/client/user/user";
 import DateRangeField from "@/components/shared/form/control/date-range-field";
 import DefaultSearchForm from "@/components/shared/form/ui/default-search-form";
 import FieldInline from "@/components/shared/form/ui/field-inline";
@@ -20,10 +20,19 @@ const UserSearch = () => {
   const router = useRouter();
 
   const handleFinish = useCallback(
-    (formValue: IProductFormValue) => {
+    (formValue: IUserFormValue) => {
       router.push({
         pathname: router.pathname,
-        query: { ...router.query, ...formValue },
+        query: {
+          page: router.query.page ? router.query.page : 1,
+          size: router.query.size ? router.query.size : 5,
+          searchDateType: formValue.searchDateType,
+          startDate: formValue.dateRange.startDate?.format("YYYY-MM-DD"),
+          endDate: formValue.dateRange.endDate?.format("YYYY-MM-DD"),
+          status: formValue.status,
+          searchType: formValue.searchType,
+          searchText: formValue.searchText,
+        },
       });
     },
     [router]
@@ -39,7 +48,7 @@ const UserSearch = () => {
               <Select.Option value="updated">수정일자</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name="searchDatePeriod">
+          <Form.Item name="dateRange">
             <DateRangeField />
           </Form.Item>
         </FieldInline>
@@ -69,7 +78,7 @@ const UserSearch = () => {
         <Button htmlType="submit" className="btn-with-icon" icon={<Search />}>
           검색
         </Button>
-        <Button htmlType="submit" className="btn-with-icon" onClick={() => form.resetFields()}>
+        <Button htmlType="button" className="btn-with-icon" onClick={() => form.resetFields()}>
           초기화
         </Button>
       </div>

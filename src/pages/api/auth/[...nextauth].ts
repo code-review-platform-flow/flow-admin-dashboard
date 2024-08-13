@@ -28,7 +28,11 @@ const credentialsProviderOption = CredentialsProvider({
 
       const parsedResponse = (await response.json()) as IUserLoginResponse;
 
-      const { email, accessToken, refreshToken } = parsedResponse;
+      const { email, accessToken, refreshToken, role } = parsedResponse;
+
+      if (role !== "ROLE_ADMIN") {
+        return null;
+      }
 
       if (email && accessToken) {
         return {

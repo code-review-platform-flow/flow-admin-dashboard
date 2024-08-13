@@ -3,8 +3,11 @@ import dayjs from "dayjs";
 import React from "react";
 
 interface IDateRangeFieldProps {
-  value?: (dayjs.Dayjs | null)[];
-  onChange?: (value: (dayjs.Dayjs | null)[]) => void;
+  value?: {
+    startDate?: dayjs.Dayjs | null;
+    endDate?: dayjs.Dayjs | null;
+  };
+  onChange?: (value: { startDate?: dayjs.Dayjs | null; endDate?: dayjs.Dayjs | null }) => void;
 }
 
 const dateRangeOptions = [
@@ -16,21 +19,31 @@ const dateRangeOptions = [
   { label: "1년", value: "1year" },
 ];
 
-const DateRangeField = ({ value, onChange }: IDateRangeFieldProps) => {
+const DateRangeField = ({ value = {}, onChange }: IDateRangeFieldProps) => {
+  const { startDate, endDate } = value;
+
   const handleDateRangeChange = (e: RadioChangeEvent) => {
+    const today = dayjs();
+    let newStartDate: dayjs.Dayjs | null = null;
+
     if (e.target.value === "today") {
-      onChange?.([dayjs(), dayjs()]);
+      newStartDate = today;
     } else if (e.target.value === "1week") {
-      onChange?.([dayjs().subtract(1, "week"), dayjs()]);
+      newStartDate = today.subtract(1, "week");
     } else if (e.target.value === "1month") {
-      onChange?.([dayjs().subtract(1, "month"), dayjs()]);
+      newStartDate = today.subtract(1, "month");
     } else if (e.target.value === "3months") {
-      onChange?.([dayjs().subtract(3, "months"), dayjs()]);
+      newStartDate = today.subtract(3, "months");
     } else if (e.target.value === "6months") {
-      onChange?.([dayjs().subtract(6, "months"), dayjs()]);
+      newStartDate = today.subtract(6, "months");
     } else if (e.target.value === "1year") {
-      onChange?.([dayjs().subtract(1, "year"), dayjs()]);
+      newStartDate = today.subtract(1, "year");
     }
+
+    onChange?.({
+      startDate: newStartDate,
+      endDate: today,
+    });
   };
 
   return (
@@ -38,17 +51,17 @@ const DateRangeField = ({ value, onChange }: IDateRangeFieldProps) => {
       <DatePicker
         placeholder="시작 날짜"
         onChange={(v: dayjs.Dayjs | null) => {
-          onChange?.([v, value?.[1] || null]);
+          onChange?.({ startDate: v, endDate });
         }}
-        value={value?.[0]}
+        value={startDate || null}
       />
       <span>~</span>
       <DatePicker
         placeholder="종료 날짜"
         onChange={(v: dayjs.Dayjs | null) => {
-          onChange?.([value?.[0] || null, v]);
+          onChange?.({ startDate, endDate: v });
         }}
-        value={value?.[1]}
+        value={endDate || null}
       />
       <div className="flex items-center gap-1">
         <Radio.Group
