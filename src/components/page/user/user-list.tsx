@@ -14,15 +14,22 @@ const UserList = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const router = useRouter();
 
-  const { data, error, isLoading } = useUsers({ page: router.query.page ? Number(router.query.page) : 0 });
-
-  console.log(data);
+  const { data, error, isLoading } = useUsers({
+    page: router.query.page ? Number(router.query.page) : 1,
+    size: router.query.size ? Number(router.query.size) : 5,
+    searchDateType: router.query.searchDateType as string,
+    startDate: router.query.startDate as string,
+    endDate: router.query.endDate as string,
+    status: router.query.status as string,
+    searchType: router.query.searchType as string,
+    searchText: router.query.searchText as string,
+  });
 
   const handleChangePage = useCallback(
     (pageNumber: number) => {
       router.push({
         pathname: router.pathname,
-        query: { ...router.query, page: pageNumber - 1 },
+        query: { ...router.query, page: pageNumber },
       });
     },
     [router]
@@ -118,10 +125,13 @@ const UserList = () => {
     },
     {
       title: "생성일시",
-      dataIndex: "createdAt",
+      dataIndex: "createDate",
       align: "center",
       width: 120,
       render: (value: ISO8601DateTime) => {
+        if (!value) {
+          return <div className="text-sm">&nbsp;</div>; // 빈칸
+        }
         return (
           <div className="text-sm">
             <span className="block">{dayjs(value).format("YYYY/MM/DD")}</span>
@@ -132,10 +142,13 @@ const UserList = () => {
     },
     {
       title: "수정일시",
-      dataIndex: "updatedAt",
+      dataIndex: "modifyDate",
       align: "center",
       width: 120,
       render: (value: ISO8601DateTime) => {
+        if (!value) {
+          return <div className="text-sm">&nbsp;</div>; // 빈칸
+        }
         return (
           <div className="text-sm">
             <span className="block">{dayjs(value).format("YYYY/MM/DD")}</span>
@@ -174,11 +187,11 @@ const UserList = () => {
       <DefaultTable<IUser>
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={data?.data || []}
+        dataSource={data?.items || []}
         loading={isLoading}
         pagination={{
           current: Number(router.query.page || 1),
-          defaultPageSize: 7,
+          defaultPageSize: data?.page.pageSize,
           total: data?.page.totalCount || 0,
           showSizeChanger: false,
           onChange: handleChangePage,

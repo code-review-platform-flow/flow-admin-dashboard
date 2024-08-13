@@ -1,4 +1,5 @@
 import { ISO8601DateTime } from "@/types/common";
+import { Dayjs } from "dayjs";
 import qs from "qs";
 import useSWR from "swr";
 import { fetchApi } from "../base";
@@ -16,10 +17,28 @@ export interface IUser {
   modifyDate: ISO8601DateTime;
 }
 
-export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate"> {}
+export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status"> {
+  searchDateType: string;
+  dateRange: {
+    startDate: Dayjs | null;
+    endDate: Dayjs | null;
+  };
+  searchType: string;
+  status: string[];
+  searchText: string;
+  page: number;
+  size: number;
+}
 
 interface IUsersParams {
   page?: number;
+  size?: number;
+  searchDateType?: string;
+  startDate?: string;
+  endDate?: string;
+  status?: string;
+  searchType?: string;
+  searchText?: string;
 }
 
 export interface ISort {
@@ -36,7 +55,7 @@ export interface IPage {
 }
 
 export interface IUsersResponse {
-  data: IUser[];
+  items: IUser[];
   page: IPage;
 }
 export interface IUserResponse {
@@ -54,9 +73,11 @@ export interface IUserLoginResponse {
   email: string;
   accessToken: string;
   refreshToken: string;
+  role: string;
 }
 
 export const useUsers = (params: IUsersParams = {}) => {
+  console.log(`${JSON.stringify(params)}`);
   return useSWR<IUsersResponse>(`api/admin/user?${qs.stringify(params)}`);
 };
 
