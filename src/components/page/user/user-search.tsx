@@ -3,8 +3,9 @@ import DateRangeField from "@/components/shared/form/control/date-range-field";
 import DefaultSearchForm from "@/components/shared/form/ui/default-search-form";
 import FieldInline from "@/components/shared/form/ui/field-inline";
 import FormSearch from "@/components/shared/form/ui/form-search";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Form, Input, Radio, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import dayjs from "dayjs";
 import { Search } from "lucide-react";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
@@ -26,12 +27,16 @@ const UserSearch = () => {
         query: {
           page: router.query.page ? router.query.page : 1,
           size: router.query.size ? router.query.size : 5,
-          searchDateType: formValue.searchDateType,
-          startDate: formValue.dateRange.startDate?.format("YYYY-MM-DD"),
-          endDate: formValue.dateRange.endDate?.format("YYYY-MM-DD"),
-          status: formValue.status,
-          searchType: formValue.searchType,
-          searchText: formValue.searchText,
+          searchDateType: formValue?.searchDateType,
+          startDate: formValue.dateRange?.startDate?.format("YYYY-MM-DD")
+            ? formValue.dateRange?.startDate?.format("YYYY-MM-DD")
+            : "2020-01-01",
+          endDate: formValue.dateRange?.endDate?.format("YYYY-MM-DD")
+            ? formValue.dateRange?.endDate?.format("YYYY-MM-DD")
+            : dayjs()?.format("YYYY-MM-DD"),
+          status: formValue?.status,
+          searchType: formValue?.searchType,
+          searchText: formValue?.searchText,
         },
       });
     },
@@ -54,7 +59,7 @@ const UserSearch = () => {
         </FieldInline>
         <div>
           <Form.Item name="status" label="유저상태">
-            <Checkbox.Group options={statusOptions} />
+            <Radio.Group options={statusOptions} />
           </Form.Item>
         </div>
         <div>
@@ -78,7 +83,13 @@ const UserSearch = () => {
         <Button htmlType="submit" className="btn-with-icon" icon={<Search />}>
           검색
         </Button>
-        <Button htmlType="button" className="btn-with-icon" onClick={() => form.resetFields()}>
+        <Button
+          htmlType="button"
+          className="btn-with-icon"
+          onClick={() => {
+            form.resetFields();
+          }}
+        >
           초기화
         </Button>
       </div>
