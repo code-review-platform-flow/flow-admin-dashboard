@@ -1,5 +1,5 @@
 import { Divider } from "antd";
-import { Home, Monitor, User2 } from "lucide-react";
+import { Home, User2 } from "lucide-react";
 import React from "react";
 import Menu, { IMenu } from "./nav";
 
@@ -28,21 +28,21 @@ const mainMenuData: IMenu[] = [
   },
 ];
 
-const devMenuData: IMenu[] = [
-  {
-    id: "dev",
-    name: "사용 가이드",
-    icon: <Monitor className="w-5 h-5" />,
-    submenu: [
-      {
-        name: "폼",
-        link: {
-          path: "/sample/form",
-        },
-      },
-    ],
-  },
-];
+// const devMenuData: IMenu[] = [
+//   {
+//     id: "dev",
+//     name: "사용 가이드",
+//     icon: <Monitor className="w-5 h-5" />,
+//     submenu: [
+//       {
+//         name: "폼",
+//         link: {
+//           path: "/sample/form",
+//         },
+//       },
+//     ],
+//   },
+// ];
 
 const MainMenu = () => {
   return (
@@ -54,13 +54,13 @@ const MainMenu = () => {
 
         <Menu data={mainMenuData} />
       </>
-      <>
+      {/* <>
         <Divider orientation="left" plain>
           개발
         </Divider>
 
         <Menu data={devMenuData} />
-      </>
+      </> */}
     </>
   );
 };

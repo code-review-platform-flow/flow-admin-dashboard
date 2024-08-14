@@ -7,11 +7,11 @@ import { useForm } from "antd/lib/form/Form";
 import React, { useState } from "react";
 
 interface IUserFormProps {
-  id?: string;
-  initialValues?: Partial<IUserFormValue>;
+  userId?: string;
+  initialValues?: IUserFormValue;
 }
 
-const UserForm = ({ id, initialValues }: IUserFormProps) => {
+const UserForm = ({ userId, initialValues }: IUserFormProps) => {
   const [form] = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
