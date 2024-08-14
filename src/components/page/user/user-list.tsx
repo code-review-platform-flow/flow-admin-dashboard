@@ -2,10 +2,9 @@ import { IUser, useUsers } from "@/client/user/user";
 import DefaultTable from "@/components/shared/ui/default-table";
 import DefaultTableBtn from "@/components/shared/ui/default-table-btn";
 import { ISO8601DateTime } from "@/types/common";
-import { Alert, Button, Dropdown, MenuProps, Popconfirm } from "antd";
+import { Alert, Button, MenuProps, Popconfirm } from "antd";
 import { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
-import { Download } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useCallback, useMemo, useState } from "react";
@@ -165,19 +164,8 @@ const UserList = () => {
 
   return (
     <>
-      <DefaultTableBtn className="justify-between">
-        <div>
-          <Dropdown disabled={!hasSelected} menu={{ items: modifyDropdownItems }} trigger={["click"]}>
-            <Button>일괄수정</Button>
-          </Dropdown>
-
-          <span style={{ marginLeft: 8 }}>{hasSelected ? `${selectedRowKeys.length}건 선택` : ""}</span>
-        </div>
-
+      <DefaultTableBtn className="justify-end">
         <div className="flex-item-list">
-          <Button className="btn-with-icon" icon={<Download />}>
-            엑셀 다운로드
-          </Button>
           <Button type="primary" onClick={() => router.push("/user/new")}>
             유저등록
           </Button>
@@ -185,7 +173,6 @@ const UserList = () => {
       </DefaultTableBtn>
 
       <DefaultTable<IUser>
-        rowSelection={rowSelection}
         columns={columns}
         dataSource={data?.items || []}
         loading={isLoading}

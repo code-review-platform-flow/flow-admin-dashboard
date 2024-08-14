@@ -17,7 +17,7 @@ export interface IUser {
   modifyDate: ISO8601DateTime;
 }
 
-export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status"> {
+export interface IUserSearchFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status" | "role"> {
   searchDateType: string;
   dateRange: {
     startDate: Dayjs | null;
@@ -28,6 +28,19 @@ export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "m
   searchText: string;
   page: number;
   size: number;
+}
+
+export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status" | "role"> {}
+
+export interface IUserSendEmailFormValue {
+  email: string;
+  universityName: string;
+}
+
+export interface IEmailCertificationRequest {
+  email: string;
+  universityName: string;
+  code: number;
 }
 
 interface IUsersParams {
@@ -85,11 +98,19 @@ export const useUser = (id: string | number) => {
   return useSWR<IUserResponse>(`api/admin/user/${id}`);
 };
 
-export const createUser = (value: IUserFormValue) => {
-  return fetchApi.post(`api/admin/user`, { body: JSON.stringify(value) });
+export const sendEmailUser = (value: IUserSendEmailFormValue) => {
+  return fetchApi.post(`auth/email`, { body: JSON.stringify(value) });
 };
 
-export const updateUser = (id: string, value: IUserFormValue) => {
+export const certificationUser = (value: IEmailCertificationRequest) => {
+  return fetchApi.post(`auth/code`, { body: JSON.stringify(value) });
+};
+
+export const createUser = (value: IUserFormValue) => {
+  return fetchApi.post(`auth/register`, { body: JSON.stringify(value) });
+};
+
+export const updateUser = (id: string, value: IUserSearchFormValue) => {
   return fetchApi.put(`api/admin/user/${id}`, { body: JSON.stringify(value) });
 };
 

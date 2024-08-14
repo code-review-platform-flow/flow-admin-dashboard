@@ -1,4 +1,4 @@
-import { IUserFormValue } from "@/client/user/user";
+import { IUserSearchFormValue } from "@/client/user/user";
 import DateRangeField from "@/components/shared/form/control/date-range-field";
 import DefaultSearchForm from "@/components/shared/form/ui/default-search-form";
 import FieldInline from "@/components/shared/form/ui/field-inline";
@@ -21,7 +21,7 @@ const UserSearch = () => {
   const router = useRouter();
 
   const handleFinish = useCallback(
-    (formValue: IUserFormValue) => {
+    (formValue: IUserSearchFormValue) => {
       router.push({
         pathname: router.pathname,
         query: {
