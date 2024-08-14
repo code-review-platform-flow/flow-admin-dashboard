@@ -17,7 +17,7 @@ export interface IUser {
   modifyDate: ISO8601DateTime;
 }
 
-export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status"> {
+export interface IUserSearchFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status" | "role"> {
   searchDateType: string;
   dateRange: {
     startDate: Dayjs | null;
@@ -28,6 +28,19 @@ export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "m
   searchText: string;
   page: number;
   size: number;
+}
+
+export interface IUserFormValue extends Omit<IUser, "userId" | "createDate" | "modifyDate" | "status" | "role"> {}
+
+export interface IUserSendEmailFormValue {
+  email: string;
+  universityName: string;
+}
+
+export interface IEmailCertificationRequest {
+  email: string;
+  universityName: string;
+  code: number;
 }
 
 interface IUsersParams {
@@ -69,6 +82,10 @@ export interface IUserCredentials {
   password: string;
 }
 
+export interface IUserWithdrawal {
+  feedback: string;
+}
+
 export interface IUserLoginResponse {
   email: string;
   accessToken: string;
@@ -77,22 +94,25 @@ export interface IUserLoginResponse {
 }
 
 export const useUsers = (params: IUsersParams = {}) => {
-  console.log(`${JSON.stringify(params)}`);
   return useSWR<IUsersResponse>(`api/admin/user?${qs.stringify(params)}`);
 };
 
-export const useUser = (id: string | number) => {
-  return useSWR<IUserResponse>(`api/admin/user/${id}`);
+export const sendEmailUser = (value: IUserSendEmailFormValue) => {
+  return fetchApi.post(`auth/email`, { body: JSON.stringify(value) });
+};
+
+export const certificationUser = (value: IEmailCertificationRequest) => {
+  return fetchApi.post(`auth/code`, { body: JSON.stringify(value) });
 };
 
 export const createUser = (value: IUserFormValue) => {
-  return fetchApi.post(`api/admin/user`, { body: JSON.stringify(value) });
-};
-
-export const updateUser = (id: string, value: IUserFormValue) => {
-  return fetchApi.put(`api/admin/user/${id}`, { body: JSON.stringify(value) });
+  return fetchApi.post(`auth/register`, { body: JSON.stringify(value) });
 };
 
 export const loginUser = (value: IUserCredentials) => {
   return fetchApi.post(`auth/login`, { body: JSON.stringify(value) });
+};
+
+export const withdrawalUser = (value: IUserWithdrawal) => {
+  return fetchApi.delete(`user`, { body: JSON.stringify(value) });
 };
