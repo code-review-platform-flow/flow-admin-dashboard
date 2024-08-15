@@ -20,7 +20,6 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      console.log(value);
       await signIn("login-credentials", { email: value.email, password: value.password });
     } catch (error) {
       setIsLoading(false);
