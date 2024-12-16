@@ -5,6 +5,7 @@ export const fetcher = (input: URL | RequestInfo, init?: RequestInit | undefined
 
 export const fetchApi = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_ENDPOINT,
+  credentials: "include",
   headers: {
     "Content-Type": "application/json",
   },
