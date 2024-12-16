@@ -8,6 +8,8 @@ export const fetcher = (input: URL | RequestInfo, init?: RequestInit | undefined
       "Content-Type": "application/json",
       ...(init?.headers || {}),
     },
+    retry: 0,
+    timeout: 10000,
   }).then((res) => res.json());
 
 export const fetchApi = ky.create({
@@ -16,13 +18,14 @@ export const fetchApi = ky.create({
   headers: {
     "Content-Type": "application/json",
   },
+  retry: 0,
+  timeout: 10000,
   hooks: {
     beforeRequest: [
       (request) => {
-        // CSRF 토큰이 있다면 추가
-        const csrfToken = document.cookie.match(new RegExp("(^| )next-auth.csrf-token=([^;]+)"));
-        if (csrfToken) {
-          request.headers.set("X-CSRF-Token", csrfToken[2]);
+        const token = localStorage.getItem("token");
+        if (token) {
+          request.headers.set("Authorization", `Bearer ${token}`);
         }
       },
     ],
