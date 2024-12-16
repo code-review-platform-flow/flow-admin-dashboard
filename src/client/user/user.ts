@@ -94,7 +94,14 @@ export interface IUserLoginResponse {
 }
 
 export const useUsers = (params: IUsersParams = {}) => {
-  return useSWR<IUsersResponse>(`api/admin/user?${qs.stringify(params)}`);
+  const { data, error } = useSWR<IUsersResponse>([`api/admin/user?${qs.stringify(params)}`, fetcher], {
+    // 필요한 경우 인증 헤더 추가
+    // 예시:
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+  return { data, error };
 };
 
 export const sendEmailUser = (value: IUserSendEmailFormValue) => {
