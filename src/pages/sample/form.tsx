@@ -36,7 +36,6 @@ const options = [
 
 const FormPage: IDefaultLayoutPage = () => {
   const [form] = useForm();
-  // formData는 아래에 전송데이터를 보여주기위한 state값. 실제 작업시 지우고 사용.
   const [formData, setFormData] = useState<ISampleFormValue>();
   const [visible, setVisible] = useState(false);
 
