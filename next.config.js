@@ -3,6 +3,14 @@ const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
   transpilePackages: ["antd"],
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://34.64.75.193/api/:path*'
+      }
+    ];
+  }
 };
 
 module.exports = nextConfig;
