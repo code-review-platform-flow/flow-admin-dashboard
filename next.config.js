@@ -6,20 +6,21 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/auth/:path*',
-        destination: 'http://34.64.82.226/api/auth/:path*'
-      },
-      {
-        source: '/api/auth/callback/:path*',
-        destination: 'http://34.64.82.226/api/auth/callback/:path*'
-      },
-      {
-        source: '/api/auth/session',
-        destination: 'http://34.64.82.226/api/auth/session'
-      },
-      {
         source: '/api/:path*',
         destination: 'http://34.64.75.193/api/:path*'
+      }
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/auth/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Credentials', value: 'true' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET,DELETE,PATCH,POST,PUT' },
+          { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version' },
+        ]
       }
     ];
   }
