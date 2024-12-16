@@ -58,7 +58,7 @@ jobs:
 
       - name: Update manifest
         run: |
-          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/gcuflow/flow-dev/flow-admin-dashboard-dev:${{ github.sha }}|" manifests/flow-web-dev/deployment.yaml
+          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/gcuflow/flow-dev/flow-admin-dashboard-dev:${{ github.sha }}|" manifests/flow-admin-dashboard-dev/deployment.yaml
 
       - name: Commit and push changes
         working-directory: manifests
